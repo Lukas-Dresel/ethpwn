@@ -9,7 +9,7 @@ version = "0.0.1.0"
 authors = [
   { name="Lukas Dresel", email="Lukas-Dresel@noreply.github.com" },
 ]
-description = "A tool to help with ethereum smart contract exploit interaction, designed with CTF challenges in mind"
+description = "A tool to help with ethereum smart contract exploit interaction, designed with CTF challenges in mind. Some might call it a set of pwn tools for ethereum exploitation."
 readme = "README.md"
 requires-python = ">=3.7"
 
