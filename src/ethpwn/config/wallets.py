@@ -83,7 +83,6 @@ def add_default_wallet(address, private_key):
             json.dump(accounts, f)
     add_wallet(address, private_key)
 
-
 def add_wallet(address, private_key):
     from . import GLOBAL_CONFIG
     assert address not in GLOBAL_CONFIG['wallets'] or GLOBAL_CONFIG['wallets'][address] == private_key, "Account already exists with different private key, likely a mistake."
@@ -99,6 +98,11 @@ def get_wallet_by_name(name) -> Wallet:
         if wallet.name == name:
             return wallet
     return None
+
+def all_wallets() -> Generator[Tuple[str, Wallet], None, None]:
+    from . import GLOBAL_CONFIG
+    for address, wallet in GLOBAL_CONFIG['wallets'].items():
+        yield address, wallet
 
 def get_wallet(address_or_name) -> Wallet:
     from . import GLOBAL_CONFIG

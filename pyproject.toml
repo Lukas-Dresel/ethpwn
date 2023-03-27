@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ethpwn"
 license = {text = "MIT License"}
-version = "0.0.1.0"
+version = "0.0.1"
 authors = [
   { name="Lukas Dresel", email="Lukas-Dresel@noreply.github.com" },
 ]

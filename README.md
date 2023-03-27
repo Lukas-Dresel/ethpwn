@@ -1,7 +1,7 @@
 # ethpwn
 
 A tool to help with ethereum smart contract exploit interaction, designed with CTF challenges in mind.
-Some might call it a set of pwn tools for ethereum exploitation. ethpwn is designed to help you waste the smallest amount
+One might call it a set of pwn tools for ethereum exploitation :P. ethpwn is designed to help you waste the smallest amount
 of time possible on the annoying parts of interacting with ethereum smart contracts, mainly deployment, transaction sending,
 and interaction.
 
@@ -12,6 +12,16 @@ pip install ethpwn
 ```
 
 ## Usage
+
+### Example exploits for the ethernaut challenges
+
+SPOILERS AHEAD! If you haven't solved the ethernaut challenges yet, you should solve them first before looking at the
+respective examples.
+
+With that said, you can see examples of how to use `ethpwn` to solve the ethernaut challenges in the [Lukas-Dresel/ethernaut](https://github.com/Lukas-Dresel/ethernaut) repository. This illustrates various versions of using `ethpwn` to make exploitation easy.
+
+Some examples are how to make import from openzeppelin work (see exploit_onchain.py), how to move funds from different
+test wallets (see consolidate_ctf_funds_into.py)
 
 ### Deploying an exploit contract
 
@@ -24,7 +34,7 @@ from time import sleep
 from ethpwn.prelude import *
 
 
-context.connect_http('<your node url>')
+context.connect_http(sys.argv[1])
 
 # syntax deploy.py <contract to deploy> [<solidity files with code..>]
 CONTRACT_METADATA.add_solidity_files(sys.argv[2:])
