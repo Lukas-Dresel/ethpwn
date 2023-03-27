@@ -7,9 +7,20 @@ import web3
 from web3.gas_strategies.rpc import rpc_gas_price_strategy
 from web3.gas_strategies.time_based import fast_gas_price_strategy, construct_time_based_gas_price_strategy
 
+from ethpwn.config.wallets import get_wallet
+
 class Web3Context:
     def __init__(self, w3=None, from_addr=None, private_key=None, log_level=logging.WARNING):
         self.w3 = w3
+
+        if from_addr is None:
+            # default wallet
+            wallet = get_wallet(None)
+            assert wallet is not None
+            from_addr = wallet.address
+            if private_key is None:
+                private_key = wallet.private_key
+
         self.default_from_addr = from_addr
         self.default_signing_key = private_key
         self.logger = logging.getLogger('Web3Context')
