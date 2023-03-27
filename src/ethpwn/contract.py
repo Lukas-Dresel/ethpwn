@@ -7,6 +7,7 @@ from typing import Any, Dict, Generator, List, Tuple, Union
 from hexbytes import HexBytes
 from solcx import compile_source, compile_files
 from web3.types import TxReceipt
+from web3.contract import Contract, ContractFunction
 import solcx
 
 from .json_utils import json_dump, json_load
@@ -99,7 +100,7 @@ class ContractMetadata:
         else:
             raise AttributeError(f"ContractMetadata has no attribute {__name}")
 
-    def deploy(self, *constructor_args, log=True, **tx_extras):
+    def deploy(self, *constructor_args, log=True, **tx_extras) -> Tuple[HexBytes, Contract]:
         tx_hash, tx_receipt = transact(
             context.w3.eth.contract(
                 abi=self.abi,
@@ -131,7 +132,7 @@ class ContractMetadata:
             context.logger.info(f"Destroying contract {contract.address} to get funds back!")
             transact(contract.functions.destroy(), from_addr=tx_extras.get('from_addr', None))
 
-    def get_contract_at(self, addr):
+    def get_contract_at(self, addr) -> Contract:
         register_typed_contract(addr, self)
         return context.w3.eth.contract(
             address=addr,
