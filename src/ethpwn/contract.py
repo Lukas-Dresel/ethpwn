@@ -7,7 +7,7 @@ from typing import Any, Dict, Generator, List, Tuple, Union
 from hexbytes import HexBytes
 from solcx import compile_source, compile_files
 from web3.types import TxReceipt
-from web3.contract import Contract, ContractFunction
+from web3.contract import Contract
 import solcx
 
 from .json_utils import json_dump, json_load

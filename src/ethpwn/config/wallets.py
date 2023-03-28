@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Dict
 
 from ..global_context import context
 
@@ -99,10 +100,9 @@ def get_wallet_by_name(name) -> Wallet:
             return wallet
     return None
 
-def all_wallets() -> Generator[Tuple[str, Wallet], None, None]:
+def all_wallets() -> Dict[str, Wallet]:
     from . import GLOBAL_CONFIG
-    for address, wallet in GLOBAL_CONFIG['wallets'].items():
-        yield address, wallet
+    return GLOBAL_CONFIG['wallets'].copy()
 
 def get_wallet(address_or_name) -> Wallet:
     from . import GLOBAL_CONFIG
