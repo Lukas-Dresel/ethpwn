@@ -147,12 +147,18 @@ class ContractMetadata:
 class ContractMetadataRegistry:
     def __init__(self) -> None:
         self.contract_info: Dict[str, Dict[str, ContractMetadata]] = defaultdict(dict)
+        exp_template_dir = os.path.dirname(os.path.realpath(__file__)) + "/exploit_templates"
         self.default_import_remappings: Dict[str, str] = {
-            "exploit_templates": os.path.dirname(os.path.realpath(__file__)) + "/exploit_templates",
+            "exploit_templates": exp_template_dir,
         }
+        self.allowed_directories: List[str] = [exp_template_dir]
 
     def add_default_import_remappings(self, remappings: Dict[str, str]):
         self.default_import_remappings.update(remappings)
+        self.add_allowed_directories(remappings.values())
+
+    def add_allowed_directories(self, directories: List[str]):
+        self.allowed_directories.extend(directories)
 
     def get_output_values(self):
         output_values = ['abi','bin','bin-runtime','asm','hashes','metadata','srcmap','srcmap-runtime']
@@ -198,12 +204,16 @@ class ContractMetadataRegistry:
         for signature, hash in meta.hashes.items():
             register_signature_hash(signature, hash)
 
+    def get_allow_paths(self):
+        return self.allowed_directories
+
     def add_solidity_source(self, source: str, file_name: str, **kwargs):
 
         self.configure_solcx_for_pragma(self.find_pragma_line(source))
 
         contracts = compile_source(
             source,
+            allow_paths=self.get_allow_paths(),
             import_remappings=self.get_import_remappings(**kwargs),
             output_values=self.get_output_values(),
             **kwargs
@@ -220,6 +230,7 @@ class ContractMetadataRegistry:
 
         contracts = compile_files(
             files,
+            allow_paths=self.get_allow_paths(),
             import_remappings=self.get_import_remappings(**kwargs),
             output_values=self.get_output_values(),
             **kwargs

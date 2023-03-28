@@ -42,11 +42,10 @@ def encode_transaction(contract_function=None, from_addr=None, **kwargs):
     # extra['maxFeePerGas'] = kwargs.get('maxFeePerGas', 1_000 * (10 ** 9)) # 1k gwei -- a lot
     extra['value'] = kwargs.get('value', 0)
     extra['gas'] = kwargs.get('gas', 0)
-    if contract_function is not None:
+    if contract_function is not None and type(contract_function):
         tx = contract_function.build_transaction(extra)
     else:
         tx = extra
-        tx['to'] = kwargs['to']
     return tx
 
 def transfer_funds(from_addr, to_addr, value=None, **kwargs):
