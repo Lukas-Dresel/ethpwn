@@ -1,8 +1,10 @@
-from ethpwn.currency_utils import ether
+from .assembly_utils import create_shellcode_deployer_bin
+from .currency_utils import ether
 from .global_context import context
 import web3
 from hexbytes import HexBytes
 from web3.types import TxReceipt
+from web3.datastructures import AttributeDict
 
 class InsufficientFundsError(Exception):
     def __init__(self, required_balance, actual_balance, cause) -> None:
@@ -113,3 +115,20 @@ def transact(contract_function=None, private_key=None, force=False, wait_for_rec
         return transaction_hash, tx_receipt
     else:
         return transaction_hash
+
+def deploy_bare_contract(bin, metadata=None, **tx_kwargs):
+    if metadata is None:
+        abi = {}
+    else:
+        abi = metadata.abi
+
+
+    if 'gasPrice' not in tx_kwargs:
+        tx_kwargs['gasPrice'] = context.pessimistic_gas_price_estimate()
+
+    tx_hash, tx_receipt = transact(to='', data=HexBytes(bin).hex(), **tx_kwargs)
+    print(tx_receipt)
+    return tx_hash, tx_receipt, context.w3.eth.contract(tx_receipt['contractAddress'])
+
+def deploy_shellcode_contract(shellcode, **tx_kwargs):
+    return deploy_bare_contract(create_shellcode_deployer_bin(shellcode), **tx_kwargs)
