@@ -1,5 +1,5 @@
 from hexbytes import HexBytes
-from pyevmasm import assemble, disassemble, disassemble_one, disassemble_all
+from .pyevmasm_fixed import assemble, disassemble, disassemble_one, disassemble_all
 
 def value_to_smallest_hexbytes(value):
     if type(value) is int:
