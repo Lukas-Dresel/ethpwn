@@ -78,10 +78,10 @@ def create_shellcode_deployer_bin(shellcode):
     assert len(code) == prev_offset
     return HexBytes(code + shellcode)
 
-def disassemble_pro(code, start_pc=0):
+def disassemble_pro(code, start_pc=0, fork='paris'):
     code = HexBytes(code)
 
-    insns = disassemble_all(code, pc=start_pc)
+    insns = disassemble_all(code, pc=start_pc, fork=fork)
 
     disassembly = ''
     for insn in insns:
