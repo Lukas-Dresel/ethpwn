@@ -27,7 +27,7 @@ class Wallet:
     def from_json_dict(d):
         return Wallet(**d)
 
-    def to_json_dict(self):
+    def to_serializable_dict(self):
         return {
             'address': self.address,
             'private_key': self.private_key,

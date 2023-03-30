@@ -13,6 +13,9 @@ def get_default_verified_contracts_path():
 def get_logged_deployed_contracts_dir():
     return config_root_dir() + '/deployed_contracts/'
 
+def get_contract_registry_dir():
+    return config_root_dir() + '/contract_registry/'
+
 def save_config(out_path):
     with open(out_path, 'w') as f:
         json.dump(GLOBAL_CONFIG, f)

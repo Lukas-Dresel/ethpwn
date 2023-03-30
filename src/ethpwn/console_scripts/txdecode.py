@@ -1,6 +1,6 @@
 import argparse
 from .. import config
-from .. import contract
+from .. import contract_metadata
 from .. import hashes
 from ..global_context import context
 from ..config import GLOBAL_CONFIG

@@ -1,6 +1,6 @@
 from hexbytes import HexBytes
 from .global_context import context
-from .contract import CONTRACT_METADATA, decode_function_input
+from .contract_registry import CONTRACT_METADATA, decode_function_input
 
 def decode_simulation_trace(trace):
     """

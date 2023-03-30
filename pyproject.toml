@@ -21,6 +21,7 @@ dependencies = [
     "pysha3",
     "hexbytes",
     "pyevmasm",
+    "ansi",
 ]
 
 keywords = [
